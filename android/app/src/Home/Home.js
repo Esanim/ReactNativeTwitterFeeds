@@ -6,23 +6,28 @@ import {colors} from '../theme'
 
 export default class Home extends Component {
   static navigationOptions = {
-    title: 'Tweeter feeds',
+    title: 'Tweeter feeds'
   }
   constructor(props) {
     super(props)
     this.state = {
-      searchString: ''
+      searchString: '',
+      errorMsg: ''
     }
   }
 
   _onSearchPressed = () => {
+    if (!this.state.searchString) {
+      this.setState({errorMsg: 'Please provide a username.'})
+      return
+    }
     this.props.navigation.navigate('Tweets', {
       searchString: this.state.searchString
     })
   }
 
   _onSearchTextChanged = (event) => {
-    this.setState({searchString: event.nativeEvent.text})
+    this.setState({searchString: event.nativeEvent.text, errorMsg: ''})
   }
 
   render() {
@@ -31,14 +36,23 @@ export default class Home extends Component {
         <Text style={styles.description}>Show user's tweets</Text>
         <View style={styles.flowRight}>
           <Text style={styles.tweeterText}>twitter\</Text>
-          <TextInput
-            underlineColorAndroid={'transparent'}
-            style={styles.searchInput}
-            value={this.state.searchString}
-            onChange={this._onSearchTextChanged}
-            placeholder="twitter user name"
+          <View style={styles.searchOuter}>
+            <TextInput
+              underlineColorAndroid={'transparent'}
+              style={styles.searchInner}
+              value={this.state.searchString}
+              onChange={this._onSearchTextChanged}
+              placeholder="twitter user name"
+            />
+            {this.state.errorMsg ? (
+              <Text style={styles.errorMsg}>{this.state.errorMsg}</Text>
+            ) : null}
+          </View>
+          <Button
+            onPress={this._onSearchPressed}
+            color={colors.light_blue}
+            title="Go"
           />
-          <Button onPress={this._onSearchPressed} color={colors.light_blue} title="Go" />
         </View>
       </View>
     )
@@ -58,7 +72,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontSize: 18,
     textAlign: 'center',
-    color: colors.label,
+    color: colors.label
   },
   flowRight: {
     flexDirection: 'row',
@@ -68,18 +82,28 @@ const styles = StyleSheet.create({
   tweeterText: {
     fontSize: 20,
     paddingRight: 4,
-    color: colors.label,
+    color: colors.label
   },
-  searchInput: {
+  searchOuter: {
+    flexGrow: 1,
+    fontSize: 18,
+    marginRight: 5,
+    color: colors.light_blue
+  },
+  searchInner: {
     height: 36,
     paddingVertical: 4,
     paddingHorizontal: 6,
-    marginRight: 5,
-    flexGrow: 1,
     fontSize: 18,
     borderWidth: 1,
     borderColor: colors.light_blue,
     borderRadius: 8,
-    color: colors.light_blue,
+    color: colors.light_blue
+  },
+  errorMsg: {
+    position: 'absolute',
+    bottom: -20,
+    left: 4,
+    color: 'red'
   }
 })
