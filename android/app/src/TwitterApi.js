@@ -7,7 +7,7 @@ const TwitterApi = {
   // Search for user's tweets
   // Params:
   // username:string - name of the user whose tweets we want to retrieve
-  // max_id:int - show tweets with id less than max_id
+  // max_id:int - show tweets with id less or equal to max_id
   // The function first acquires the guest bearer token which then uses it to fetch tweets and return a promise
   async search(username, max_id) {
     const usernameEncoded = encodeURIComponent(username)
@@ -15,9 +15,12 @@ const TwitterApi = {
 
     if (!this.bearerToken) {
       let tokenData = await this._getBearerToken()
-      this.bearerToken = tokenData?.access_token
+      if (tokenData === undefined) {
+        throw new Error('Bearer token could not be acquired.')
+      }
+      this.bearerToken = tokenData.access_token
     }
-    return this._loadTweet(usernameEncoded, max_id)
+    return this._loadTweets(usernameEncoded, max_id)
   },
 
   async _getBearerToken() {
@@ -49,12 +52,12 @@ const TwitterApi = {
       body: formBody
     })
       .then((response) => response.json())
-      .catch((error) => {
-        console.log('_getBearerToken failure' + JSON.stringify(error))
-      })
+      .catch((error) =>
+        console.log(`Bad reponse: @$ ${arguments.callee.name}: ${error}`)
+      )
   },
 
-  async _loadTweet(username, max_id) {
+  async _loadTweets(username, max_id) {
     let q = `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${username}&count=50&exclude_replies=true&include_rts=false&tweet_mode=extended`
     if (max_id > 0) {
       q += `&max_id=${max_id}`
@@ -67,7 +70,8 @@ const TwitterApi = {
     })
       .then((response) => response.json())
       .catch((error) => {
-        console.log('_loadTweet failure' + JSON.stringify(error))
+        console.log(`Bad reponse: @$ ${arguments.callee.name}: ${error}`)
+        throw error // or return and object with error property
       })
   }
 }

@@ -28,6 +28,9 @@ export default class Tweets extends React.Component {
 
   _getErrorMessage(error, searchString) {
     switch (error) {
+      case ERRNOUSER: {
+        return `User ${searchString} was not found.`
+      }
       case ERRNOTAUTHORIZED: {
         return `No access for user ${searchString}.`
       }
@@ -49,7 +52,7 @@ export default class Tweets extends React.Component {
       .then((res) => {
         if (res.errors) {
           console.table(res.errors)
-          this._setErrorState('')
+          this._setErrorState(res.errors[0].code)
         } else if (res.error) {
           console.log(res.error)
           this._setErrorState(res.error)
