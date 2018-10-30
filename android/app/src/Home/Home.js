@@ -2,15 +2,11 @@
 
 import React, {Component} from 'react'
 import {StyleSheet, Text, TextInput, View, Button} from 'react-native'
+import {colors} from '../theme'
 
 export default class Home extends Component {
   static navigationOptions = {
     title: 'Tweeter feeds',
-    headerTitleStyle: {
-      color: 'black',
-      fontSize: 20,
-      fontWeight: '400'
-    }
   }
   constructor(props) {
     super(props)
@@ -42,7 +38,7 @@ export default class Home extends Component {
             onChange={this._onSearchTextChanged}
             placeholder="twitter user name"
           />
-          <Button onPress={this._onSearchPressed} color="#48BBEC" title="Go" />
+          <Button onPress={this._onSearchPressed} color={colors.light_blue} title="Go" />
         </View>
       </View>
     )
@@ -51,7 +47,7 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     paddingHorizontal: 30,
     paddingVertical: 70,
     alignItems: 'center',
@@ -62,7 +58,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontSize: 18,
     textAlign: 'center',
-    color: '#656565'
+    color: colors.label,
   },
   flowRight: {
     flexDirection: 'row',
@@ -71,17 +67,19 @@ const styles = StyleSheet.create({
   },
   tweeterText: {
     fontSize: 20,
-    paddingRight: 4
+    paddingRight: 4,
+    color: colors.label,
   },
   searchInput: {
     height: 36,
-    padding: 4,
+    paddingVertical: 4,
+    paddingHorizontal: 6,
     marginRight: 5,
     flexGrow: 1,
     fontSize: 18,
     borderWidth: 1,
-    borderColor: '#48BBEC',
+    borderColor: colors.light_blue,
     borderRadius: 8,
-    color: '#48BBEC'
+    color: colors.light_blue,
   }
 })

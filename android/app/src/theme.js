@@ -1,9 +1,10 @@
 const colors = Object.freeze({
-    bg: '#ffffff',
-    headerColor: '#ffffff',
-    headerbg: '#1dcaff',
-    separator: '#0084b4',
-    red: '#E43636'
+    white: '#ffffff',
+    error: '#E43636',
+    light_blue: '#48BBEC',
+    blue: '#00aced',
+    blue_dark: '#0084b4',
+    label: '#656565',
 })
 
 export {colors}

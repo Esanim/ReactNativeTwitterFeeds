@@ -8,11 +8,6 @@ import Tweet from '../components/Tweet'
 export default class Tweets extends React.Component {
   static navigationOptions = {
     title: 'User Tweets',
-    headerTitleStyle: {
-      color: 'black',
-      fontSize: 20,
-      fontWeight: '400'
-    }
   }
 
   constructor(props) {
@@ -93,7 +88,7 @@ export default class Tweets extends React.Component {
 
   renderHeader = () => {
     return (!this.state.isLoading && !this.state.tweets.length) ? (
-      <Text>The list is empty</Text>
+      <Text style={styles.description}>No tweets found.</Text>
     ) : null
   }
 
@@ -117,7 +112,7 @@ export default class Tweets extends React.Component {
     if (this.state.errorMsg) {
       return (
         <View style={styles.container}>
-          <Text style={styles.errorMsg}>{this.state.errorMsg}</Text>
+          <Text style={[styles.description, styles.errorMsg]}>{this.state.errorMsg}</Text>
         </View>
       )
     } else {
@@ -145,19 +140,23 @@ export default class Tweets extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.bg,
+    backgroundColor: colors.white,
     flexDirection: 'row',
     alignItems: 'flex-start',
-    textAlign: 'right'
+    justifyContent: 'center',
   },
   errorMsg: {
-    fontSize: 20,
-    paddingVertical: 40,
-    paddingHorizontal: 20,
-    color: colors.red
+    color: colors.error,
   },
   separator: {
     height: 1,
-    backgroundColor: colors.separator
+    backgroundColor: colors.blue_dark
+  }, 
+  description: {
+    fontSize: 20,
+    paddingVertical: 40,
+    paddingHorizontal: 20,
+    color: colors.description,
+    textAlign: 'center',
   }
 })
