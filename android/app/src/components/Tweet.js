@@ -24,17 +24,17 @@ const Tweet = ({tweet}) => {
           style={styles.tweetImageContainer}
           onPress={() => Linking.openURL(url)}
         >
-          <Image style={styles.tweetImage} source={{uri: profile_image_url}} />
+          <Image testID={'_tweetImage'} style={styles.tweetImage} source={{uri: profile_image_url}} />
         </TouchableOpacity>
-        <Text style={styles.tweetScreenName}>@{screen_name}</Text>
-        <Text style={styles.tweetDate}>
+        <Text testID={'_tweetScreenName'} style={styles.tweetScreenName}>@{screen_name}</Text>
+        <Text testID={'_tweetDate'} style={styles.tweetDate}>
           {moment(created_at, 'ddd MMM DD HH:mm:ss +ZZ YYYY').format(
             'ddd MMM DD HH:mm (YYYY)'
           )}
         </Text>
       </View>
-      <Text style={styles.tweetUserName}>{name}</Text>
-      <Text>{full_text}</Text>
+      <Text testID={'_tweetUserName'} style={styles.tweetUserName}>{name}</Text>
+      <Text testID={'_tweetText'}>{full_text}</Text>
     </View>
   )
 }

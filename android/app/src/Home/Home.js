@@ -33,11 +33,12 @@ export default class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.description}>Show user's tweets</Text>
+        <Text testID={'_description'} style={styles.description}>Show user's tweets</Text>
         <View style={styles.flowRight}>
-          <Text style={styles.tweeterText}>twitter\</Text>
+          <Text testID={'_tweeterText'} style={styles.tweeterText}>twitter\</Text>
           <View style={styles.searchOuter}>
             <TextInput
+              testID={'_searchInner'}
               underlineColorAndroid={'transparent'}
               style={styles.searchInner}
               value={this.state.searchString}
@@ -49,6 +50,7 @@ export default class Home extends Component {
             ) : null}
           </View>
           <Button
+            testID={'_searchBtn'}
             onPress={this._onSearchPressed}
             color={colors.light_blue}
             title="Go"
